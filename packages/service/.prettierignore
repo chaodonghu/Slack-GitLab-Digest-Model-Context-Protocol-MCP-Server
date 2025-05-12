@@ -1,0 +1,11 @@
+# Next.js
+.next/
+
+# Node
+node_modules/
+**/node_modules/
+
+# npm
+# avoid clashes with npm cli formatting
+package.json
+**/package.json

@@ -1,0 +1,41 @@
+{
+  "name": "@zapier/storybook",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Shared Storybook instance for all zhwdailysummarizer packages",
+  "main": "src/index.ts",
+  "repository": "https://gitlab.com/zapier/zhwdailysummarizer/-/tree/main/packages/storybook",
+  "license": "UNLICENSED",
+  "scripts": {
+    "format": "prettier --write './src/**/*.{ts,tsx,md}'",
+    "format:check": "prettier --check './src/**/*.{ts,tsx,md}'",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "test": "echo 'pass'",
+    "test:ci": "echo 'pass'",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "validate": "pnpm typecheck && pnpm test"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@zapier/design-system": "^9.0.0",
+    "@zapier/design-system-beta": "^2.0.0",
+    "@zapier/design-tokens": "^1.8.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^8.6.2",
+    "@storybook/addon-essentials": "^8.6.2",
+    "@storybook/addon-interactions": "^8.6.2",
+    "@storybook/addon-links": "^8.6.2",
+    "@storybook/addon-onboarding": "^8.6.2",
+    "@storybook/blocks": "^8.6.2",
+    "@storybook/nextjs": "^8.6.2",
+    "@storybook/react": "^8.6.2",
+    "@storybook/test": "^8.6.2",
+    "@types/react": "^18.3.18",
+    "storybook": "^8.6.2",
+    "typescript": "^5.7.3"
+  }
+}

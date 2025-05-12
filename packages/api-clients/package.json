@@ -1,0 +1,10 @@
+{
+    "name": "@zapier/api-clients",
+    "private": true,
+    "type": "module",
+    "dependencies": {
+        "openapi-fetch": "0.13.5"
+    },
+    "exports": {
+      "./*": "./*.ts"
+    }}

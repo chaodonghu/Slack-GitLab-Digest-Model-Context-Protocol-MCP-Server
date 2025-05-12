@@ -1,0 +1,30 @@
+version: 1
+
+service:
+  name: zhwdailysummarizer
+  description: Zapier Hack Week - May 12 - 16
+  owner: enterprise_experience
+
+  language: TypeScript
+  framework: Next.js
+  tier: tier_4
+  lifecycle: generally_available
+
+  repositories:
+    - name: zapier/zhwdailysummarizer
+      path: "/"
+      provider: gitlab
+
+  tags:
+    - key: type
+      value: service
+    - key: frontend
+      value: true
+
+  tools:
+    - name: Documentation
+      category: wiki
+      url: https://docs.k8s.zapier.com/zhwdailysummarizer/
+    - name: Slack Channel
+      category: observability
+      url: https://zapier.slack.com/archives/C08SBV3PC57

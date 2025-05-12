@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+from contextlib import suppress
+
+
+def call(command, show=True):
+    if show:
+        print()
+        print(command)
+    process = subprocess.run(command, shell=True, capture_output=not show)
+    if process.returncode != 0 and show:
+        sys.exit(process.returncode)
+
+
+preserved_files = [
+    "CONTRIBUTING.md",
+    "docs/",
+    "opslevel.yml",
+    "README.md",
+]
+demo_files = [
+    "packages/service/tests/e2e/helloWorld.spec.ts",
+    "packages/service/src/components/HelloWorld.test.tsx",
+    "packages/service/src/components/HelloWorld.tsx",
+]
+
+if "--tooling" in sys.argv:
+    preserved_files.extend(
+        [
+            "packages/service/",
+        ]
+    )
+if "--all" not in sys.argv:
+    preserved_files.extend(
+        [
+            "package.json",
+        ]
+    )
+
+result = input("Rebuild this project from the template? [y/N] ")
+if result != "y":
+    sys.exit(0)
+
+call(
+    "cookiecutter --no-input --overwrite-if-exists --output-dir=.. --config-file=.cookiecutter.yml git@gitlab.com:zapier/nextjs-template"
+)
+
+for preserved_file in preserved_files:
+    call(f"git checkout {preserved_file}", show=False)
+
+for demo_file in demo_files:
+    with suppress(FileNotFoundError):
+        os.remove(demo_file)
+
+call("pnpm install")
+
+print("Project successfully updated! Changes are ready to commit.")

@@ -1,0 +1,27 @@
+@import "@zapier/design-tokens/custom-properties.css";
+@import "@zapier/design-system/style.css";
+@import "@zapier/design-system-beta/style.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@font-face {
+  font-family: Degular Display;
+  src: url('https://fonts.zapier.com/Degular/DegularDisplay-Medium.woff2')
+    format('woff2');
+  font-display: swap;
+  font-weight: 500;
+}
+@font-face {
+  font-family: Degular Display;
+  src: url('https://fonts.zapier.com/Degular/DegularDisplay-Semibold.woff2')
+    format('woff2');
+  font-display: swap;
+  font-weight: 600;
+}
+@font-face {
+  font-family: Degular Display;
+  src: url('https://fonts.zapier.com/Degular/Degular_Display-Bold.woff2')
+    format('woff2');
+  font-display: swap;
+  font-weight: 700;
+}

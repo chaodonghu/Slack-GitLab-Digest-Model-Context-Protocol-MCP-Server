@@ -1,0 +1,69 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "globalDependencies": [".env"],
+  "globalDotEnv": ["packages/service/.env", "packages/service/.env.local"],
+  "globalEnv": ["NODE_ENV", "VERCEL_ENV", "VERCEL_URL", "PORT"],
+  "pipeline": {
+    "validate": {
+      "dependsOn": []
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**"]
+    },
+    "service#build": {
+      "outputs": [".next/**"],
+      "env": [
+        "NEXT_PUBLIC_VERCEL_ENV",
+        "NEXT_PUBLIC_SENTRY_DSN",
+        "NEXT_PUBLIC_COMMIT_SHA",
+        "NEXT_PUBLIC_DATADOG_APP_ID",
+        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
+        "NEXT_PUBLIC_ZAPIER_ORIGIN"
+      ]
+    },
+    "typecheck": {
+      "dependsOn": [],
+      "outputs": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts"]
+    },
+    "test": {
+      "dependsOn": [],
+      "outputs": [],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts"]
+    },
+    "test:coverage": {
+      "outputs": ["coverage/*.json"]
+    },
+    "lint": {
+      "outputs": [],
+      "env": [
+        "NEXT_PUBLIC_VERCEL_ENV",
+        "NEXT_PUBLIC_SENTRY_DSN",
+        "NEXT_PUBLIC_COMMIT_SHA",
+        "NEXT_PUBLIC_DATADOG_APP_ID",
+        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
+        "NEXT_PUBLIC_ZAPIER_ORIGIN",
+        "SPLIT_CLIENT_API_KEY",
+        "SPLIT_SERVER_API_KEY",
+        "PORT"
+      ]
+    },
+    "service#lint": {
+      "env": [
+        "NEXT_PUBLIC_VERCEL_ENV",
+        "NEXT_PUBLIC_SENTRY_DSN",
+        "NEXT_PUBLIC_COMMIT_SHA",
+        "NEXT_PUBLIC_DATADOG_APP_ID",
+        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
+        "NEXT_PUBLIC_ZAPIER_ORIGIN",
+        "SPLIT_CLIENT_API_KEY",
+        "SPLIT_SERVER_API_KEY"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": []
+    }
+  }
+}

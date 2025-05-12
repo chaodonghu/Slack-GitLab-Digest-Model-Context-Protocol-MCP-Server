@@ -1,0 +1,10 @@
+{
+  "monolith": {
+    "filepath": "/packages/api-clients/monolith-v4-openapi.json"
+  },
+  "gulliver": {
+    "git": "git@gitlab.com:zapier/zapier",
+    "branch": "main",
+    "filepath": "web/backend/zapier/gulliver/api/openapi/schema.yaml"
+  }
+}
