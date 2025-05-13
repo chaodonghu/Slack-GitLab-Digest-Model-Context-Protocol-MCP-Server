@@ -90,16 +90,6 @@ Integrates DataDog RUM tracking
 
 ### 🗺 [Google Tag Manager](./packages/service/src/observability/googleTagManager.tsx)
 
-Integrates GTM
-
-### 🗺 [Fullstory](./packages/service/src/observability/tracking/FullStory/FullStory.tsx)
-
-Integrates FullStory user tracking
-
-### 🗺 [Page Tracking](./packages/service/src/observability/tracking/TrackRouting.tsx)
-
-`@zapier/toolbox-tracking` page tracking integration
-
 ## Testing
 
 ### [Vitest unit testing](./packages/service/vitest.config.js)
@@ -108,37 +98,21 @@ Integrates FullStory user tracking
 
 Vitest is setup to automatically pick up all `*.test.tsx` files in the `./packages/service/src` directory.
 
-### [Playwright e2e testing](./packages/service/tests/e2e)
-
-To run locally you can use:
-
-- `pnpm test:e2e` - Run tests headlessly
-- `pnpm test:e2e:ui` - Run tests with UI mode
-- `pnpm test:e2e:debug` - Run tests in debug mode
-
 ## 🗺 CI/CD workflow
 
 1. PRs target a merge to a branch named `staging`.
-1. When a new PR is opened:
+2. When a new PR is opened:
 
 - A preview deployment is triggered.
-- e2e tests run against this preview deployment.
 
-1. When a PR merges into `staging`:
+3. When a PR merges into `staging`:
 
 - A staging deployment is triggered.
-- e2e tests run against this staging deployment.
 
-1. If the merge pipeline succeeds, `staging` gets automatically merged into `main`. This triggers a production deployment.
+4. If the merge pipeline succeeds, `staging` gets automatically merged into `main`. This triggers a production deployment.
 
 Be sure to follow the instructions in [Vercel CI/CD Workflow](https://engineering.zapier.com/guides/frontend/vercel/ci-cd-workflow/) to configure the Vercel portion of this setup.
 
 ### 🗺 Preview Deployments Powered by Vercel
 
 The template comes pre-configured with everything you need to get your Vercel preview deployments running, and to proxy all unhandles routes to zapier-staging.com.
-
-### Storybook Set-up
-
-A separate package for Storybook is ready and available for component development. Follow this [Engineering Index guide](https://engineering.zapier.com/guides/frontend/vercel/runbook/storybook-deploys/) to set up Vercel deploys for Storybook. Learn how to use Storybook [here](https://storybook.js.org/). When using Stroybook, you'll need to install `@storybook/react` in the appropriate package, and create a `.stories` [file](https://gitlab.com/zapier/team-enterprise-experience/assetmanagement/-/blob/staging/packages/shared/src/components/common/KebabMenu/KebabMenu.stories.tsx).
-
-# test

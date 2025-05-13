@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Avatar, ContentSection, Grid, Spinner } from "@zapier/design-system";
-import SplitExample from "../SplitExample/SplitExample";
 
 interface Zapien {
   name: string;
@@ -37,7 +36,7 @@ export function HelloWorld() {
       >
         Hello from the nextjs-template!
       </h1>
-      <SplitExample />
+
       {people.length > 0 ? (
         <Grid columns={3}>
           {people.map((person, index) => (

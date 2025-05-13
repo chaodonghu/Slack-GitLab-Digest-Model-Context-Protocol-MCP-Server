@@ -61,8 +61,3 @@ cypress/results
 .vscode
 .turbo
 .vercel
-
-# Playwright artifacts
-packages/service/playwright-report/
-packages/service/test-results/
-packages/service/playwright-results.xml
