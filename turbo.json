@@ -44,8 +44,6 @@
         "NEXT_PUBLIC_DATADOG_APP_ID",
         "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
         "NEXT_PUBLIC_ZAPIER_ORIGIN",
-        "SPLIT_CLIENT_API_KEY",
-        "SPLIT_SERVER_API_KEY",
         "PORT"
       ]
     },
@@ -56,9 +54,7 @@
         "NEXT_PUBLIC_COMMIT_SHA",
         "NEXT_PUBLIC_DATADOG_APP_ID",
         "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
-        "NEXT_PUBLIC_ZAPIER_ORIGIN",
-        "SPLIT_CLIENT_API_KEY",
-        "SPLIT_SERVER_API_KEY"
+        "NEXT_PUBLIC_ZAPIER_ORIGIN"
       ]
     },
     "dev": {

@@ -4,21 +4,15 @@
     "node": ">=18.0.0 <19.0.0"
   },
   "scripts": {
-    "dev": "cd packages/service && pnpm dev",
+    "dev": "cd packages/mcp-server && pnpm dev",
     "docs": "docker run -itv $(PWD):/host -p 8000:8000 zapier/sphinx",
     "format": "prettier --write '**/*.{js,ts,tsx}'",
     "service": "cd packages/service && pnpm dev",
-    "storybook": "pnpm --filter @zapier/storybook storybook",
     "test": "turbo run test",
     "test:coverage": "rm -rf coverage && turbo test:coverage",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "build": "turbo run build",
-    "test:e2e": "pnpm --filter service test:e2e",
-    "test:e2e:ui": "pnpm --filter service test:e2e:ui",
-    "test:e2e:debug": "pnpm --filter service test:e2e:debug",
-    "test:e2e:merge-reports": "pnpm --filter @zapier/service test:e2e:merge-reports",
-    "prepare": "pnpm --filter service playwright install",
     "api-clients:bootstrap": "pnpm exec api-client-generator --bootstrap",
     "api-clients:fetch": "pnpm exec api-client-generator --fetch --config ./packages/api-clients/apis.json --output ./packages/api-clients",
     "api-clients:generate": "pnpm exec api-client-generator --config ./packages/api-clients/apis.json --output ./packages/api-clients"

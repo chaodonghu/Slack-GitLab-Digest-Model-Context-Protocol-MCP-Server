@@ -76,45 +76,12 @@ To opt out of DataDog RUM, remove the following:
 1.  The `packages/service/src/observability/datadogRum.ts` file and its export from `index.ts` in the same directory.
 2.  The `NEXT_PUBLIC_DATADOG_APP_ID=` and `NEXT_PUBLIC_DATADOG_CLIENT_TOKEN=` vars from each of the `.env.<environment>` files.
 3.  The `initializeDatadogRum()` block, `export const reportWebVitals`, and related imports from `packages/service/src/pages/_app.tsx`.
-
-### Finish setting up FullStory
-
-To complete the FullStory integration, follow the **Setup** steps. To opt-out, follow the **Removing FullStory** steps.
-
-**Setup:**
-
-This template comes with FullStory all wired up but requires a user object of this shape to identify users and stitch together recorded sessions. This user object is not required and won't be available for users on logged out pages but should be included anywhere that a user session can exist. This data can be fetched using whatever data fetching method you prefer but must be passed to FullStory to initialize.
-
-```js
-interface User {
-  id: string; // accountId of user
-  fullName: string;
-  email: string;
-  [key: string]: any; // any other fields are acceptable here
-}
-```
-
-The user data should be fetched [here](https://github.com/zapier/nextjs-template/blob/main/%7B%7Bcookiecutter.gitlab_repo%7D%7D/packages/service/src/pages/_app.tsx#L26) or that logic can be moved to the `FullStory` component as in the example linked below.
-
-An example of how this can be done with GraphQL can be [found in account-management here](https://github.com/zapier/account-management/blob/main/packages/service/src/observability/FullStory/FullStory.tsx#L61-L68).
-
-**Removing FullStory:**
-
-To opt-out of FullStory, remove the following:
-
-1.  `packages/service/src/observability/FullStory` and its export from the `index.ts` file in the same directory
-1.  The `<FullStory />` component and related imports from `packages/service/src/pages/_app.tsx`
-
+f
 ### Finish setting up Google Tag Manager
 
 why gtm
 
 To complete the Google Tag Manager integration, import and render the `GoogleTagManagerScript` in `_app.tsx` file.
-
-## Finish setting up Split
-
-Split works out of the box with a config that will always default to a localhost treatment. If you want to enable a functional
-treatment you will have to do so via the Split Web UI and modify the config with the appropriate API keys.
 
 #### Testing
 
