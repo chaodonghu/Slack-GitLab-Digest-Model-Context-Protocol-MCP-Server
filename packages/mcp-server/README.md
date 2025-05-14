@@ -1,7 +1,8 @@
 ## Features
 
 - **Summarizes Slack activity** for a user in different timeframes (today, yesterday, day before yesterday, last week)
-- **Captures all types of activity** including direct messages, thread replies, and emoji reactions
+- **Captures all types of Slack activity** including direct messages, thread replies, and emoji reactions
+- **Summarizes Github MR activity**
 
 ## Setup
 
@@ -11,6 +12,7 @@
 - pnpm
 - Slack API token with appropriate scopes
 - OpenAI API key
+- Gitlab Token
 
 ### Installation
 
@@ -31,6 +33,9 @@ SLACK_API_TOKEN=xoxb-your-bot-token-here
 
 # OpenAI API Configuration
 OPENAI_API_KEY=your-openai-api-key-here
+
+# Gitlab API Configuration
+GITLAB_TOKEN=gitlab-token-here
 ```
 
 3. Start the server:
