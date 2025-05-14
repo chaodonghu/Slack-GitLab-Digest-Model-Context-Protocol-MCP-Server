@@ -9,26 +9,24 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 
 import {
-  ListChannelsArgs,
-  GetChannelHistoryArgs,
-  GetThreadRepliesArgs,
-  GetUsersArgs,
   GetUserActivityArgs,
   SummarizeActivityArgs,
+  GetMergeRequestsArgs,
+  SummarizeGitlabActivityArgs,
 } from "./types";
 import {
-  listChannelsTool,
-  getChannelHistoryTool,
-  getThreadRepliesTool,
-  getUsersTool,
-  getUserActivityTool,
-  summarizeActivityTool,
+  getSlackUserActivityTool,
+  summarizeSlackActivityTool,
+  getGitlabMergeRequestsTool,
+  summarizeGitlabActivityTool,
 } from "./tools";
 
 import {
   getUserActivity,
   summarizeSlackMessages,
-  SlackClient,
+  // SlackClient,
+  GitlabClient,
+  summarizeMergeRequests,
 } from "./resources";
 
 dotenv.config();
@@ -36,11 +34,22 @@ dotenv.config();
 async function main() {
   const botToken = process.env.SLACK_BOT_TOKEN;
   const teamId = process.env.SLACK_TEAM_ID;
-
+  const gitlabToken = process.env.GITLAB_TOKEN;
+  const openaiApiKey = process.env.OPENAI_API_KEY;
   if (!botToken || !teamId) {
     console.error(
       "Please set SLACK_BOT_TOKEN and SLACK_TEAM_ID environment variables",
     );
+    process.exit(1);
+  }
+
+  if (!gitlabToken) {
+    console.error("Please set GITLAB_TOKEN environment variable");
+    process.exit(1);
+  }
+
+  if (!openaiApiKey) {
+    console.error("Please set OPENAI_API_KEY environment variable");
     process.exit(1);
   }
 
@@ -58,8 +67,10 @@ async function main() {
   );
 
   // TODO: Consoliate slack client to a single instance (right now there are 2)
-  const slackClient = new SlackClient(botToken);
+  // const slackClient = new SlackClient(botToken);
+  const gitlabClient = new GitlabClient(process.env.GITLAB_TOKEN!);
 
+  
   server.setRequestHandler(
     CallToolRequestSchema,
     async (request: CallToolRequest) => {
@@ -70,61 +81,6 @@ async function main() {
         }
 
         switch (request.params.name) {
-          case "slack_list_channels": {
-            const args = request.params
-              .arguments as unknown as ListChannelsArgs;
-            const response = await slackClient.getChannels(
-              args.limit,
-              args.cursor,
-            );
-            return {
-              content: [{ type: "text", text: JSON.stringify(response) }],
-            };
-          }
-
-          case "slack_get_channel_history": {
-            const args = request.params
-              .arguments as unknown as GetChannelHistoryArgs;
-            if (!args.channel_id) {
-              throw new Error("Missing required argument: channel_id");
-            }
-            const response = await slackClient.getChannelHistory(
-              args.channel_id,
-              args.limit,
-            );
-            return {
-              content: [{ type: "text", text: JSON.stringify(response) }],
-            };
-          }
-
-          case "slack_get_thread_replies": {
-            const args = request.params
-              .arguments as unknown as GetThreadRepliesArgs;
-            if (!args.channel_id || !args.thread_ts) {
-              throw new Error(
-                "Missing required arguments: channel_id and thread_ts",
-              );
-            }
-            const response = await slackClient.getThreadReplies(
-              args.channel_id,
-              args.thread_ts,
-            );
-            return {
-              content: [{ type: "text", text: JSON.stringify(response) }],
-            };
-          }
-
-          case "slack_get_users": {
-            const args = request.params.arguments as unknown as GetUsersArgs;
-            const response = await slackClient.getUsers(
-              args.limit,
-              args.cursor,
-            );
-            return {
-              content: [{ type: "text", text: JSON.stringify(response) }],
-            };
-          }
-
           case "slack_get_user_activity": {
             const args = request.params
               .arguments as unknown as GetUserActivityArgs;
@@ -144,7 +100,7 @@ async function main() {
             };
           }
 
-          case "summarize_activity_tool": {
+          case "summarize_slack_activity": {
             const args = request.params
               .arguments as unknown as SummarizeActivityArgs;
             if (!args.user_id) {
@@ -157,6 +113,78 @@ async function main() {
               args.end,
             );
             const summary = await summarizeSlackMessages(activity);
+
+            return {
+              content: [{ type: "text", text: JSON.stringify(summary) }],
+            };
+          }
+
+          case "gitlab_get_merge_requests": {
+            const args = request.params
+              .arguments as unknown as GetMergeRequestsArgs;
+            if (!args.username) {
+              throw new Error("Missing required argument: username");
+            }
+
+            // if (!args.full_paths || args.full_paths.length === 0) {
+            //   throw new Error("Missing required argument: full_paths");
+            // }
+
+            // Hardcode full paths for now
+            const fullPaths = args.full_paths || [
+              "zapier/team-enterprise-experience/account-management",
+              "zapier/team-enterprise-experience/assetmanagement",
+              "zapier/team-enterprise-experience/zhwdailysummarizer",
+            ];
+
+            const mergeRequests = await Promise.all(
+              fullPaths.map((fullPath) =>
+                gitlabClient.fetchMergeRequests({
+                  fullPath,
+                  username: args.username,
+                  from: args.from,
+                  to: args.to,
+                }),
+              ),
+            );
+
+            console.error("mergeRequests!!!!!", mergeRequests);
+
+            const flattenedMergeRequests = mergeRequests?.flat();
+
+            return {
+              content: [
+                { type: "text", text: JSON.stringify(flattenedMergeRequests) },
+              ],
+            };
+          }
+
+          case "summarize_gitlab_activity": {
+            const args = request.params
+              .arguments as unknown as SummarizeGitlabActivityArgs;
+            if (!args.username) {
+              throw new Error("Missing required argument: username");
+            }
+
+            // Hardcode full paths for now
+            const fullPaths = [
+              "zapier/team-enterprise-experience/account-management",
+              "zapier/team-enterprise-experience/assetmanagement",
+              "zapier/team-enterprise-experience/zhwdailysummarizer",
+            ];
+
+            const mergeRequests = await Promise.all(
+              fullPaths.map((fullPath) =>
+                gitlabClient.fetchMergeRequests({
+                  fullPath,
+                  username: args.username,
+                }),
+              ),
+            );
+
+            const flattenedMergeRequests = mergeRequests?.flat();
+
+            const summary = await summarizeMergeRequests(flattenedMergeRequests);
 
             return {
               content: [{ type: "text", text: JSON.stringify(summary) }],
@@ -186,12 +214,10 @@ async function main() {
     console.error("Received ListToolsRequest");
     return {
       tools: [
-        listChannelsTool,
-        getChannelHistoryTool,
-        getThreadRepliesTool,
-        getUsersTool,
-        getUserActivityTool,
-        summarizeActivityTool,
+        getSlackUserActivityTool,
+        summarizeSlackActivityTool,
+        getGitlabMergeRequestsTool,
+        summarizeGitlabActivityTool,
       ],
     };
   });

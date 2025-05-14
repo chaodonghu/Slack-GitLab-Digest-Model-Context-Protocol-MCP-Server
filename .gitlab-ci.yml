@@ -144,34 +144,34 @@ test:
 ###############################################################################
 # Deploy
 
-production:merge:
-  # Only allow one merge to main at a time
-  resource_group: merge
-  stage: prod
-  environment: production
-  extends:
-    - .run-only-on-non-frozen-staging
-  before_script:
-    # Setup git
-    - apt-get install -y git
-    # Configure git so we can push to our GitLab repository
-    - git config --global user.name "GitLab Service Bot"
-    - git config --global user.email service-gitlab@zapier.com
-    - git config --global user.signingkey $GITLAB_TOKEN_GPG_FINGERPRINT
-    - git config --global commit.gpgsign true
-    - git config --global tag.gpgSign true
-    - git remote set-url origin https://service-gitlab2:${GITLAB_ACCESS_TOKEN}@gitlab.com/$CI_PROJECT_NAMESPACE/zhwdailysummarizer.git
-  script:
-    # Fetch branches from remote
-    - git fetch origin main $CI_COMMIT_REF_NAME
-    # Switch to the branch this GitLab job is associated to (i.e. `staging`)
-    - git checkout --track origin/$CI_COMMIT_REF_NAME
+# production:merge:
+#   # Only allow one merge to main at a time
+#   resource_group: merge
+#   stage: prod
+#   environment: production
+#   extends:
+#     - .run-only-on-non-frozen-staging
+#   before_script:
+#     # Setup git
+#     - apt-get install -y git
+#     # Configure git so we can push to our GitLab repository
+#     - git config --global user.name "GitLab Service Bot"
+#     - git config --global user.email service-gitlab@zapier.com
+#     - git config --global user.signingkey $GITLAB_TOKEN_GPG_FINGERPRINT
+#     - git config --global commit.gpgsign true
+#     - git config --global tag.gpgSign true
+#     - git remote set-url origin https://service-gitlab2:${GITLAB_ACCESS_TOKEN}@gitlab.com/$CI_PROJECT_NAMESPACE/zhwdailysummarizer.git
+#   script:
+#     # Fetch branches from remote
+#     - git fetch origin main $CI_COMMIT_REF_NAME
+#     # Switch to the branch this GitLab job is associated to (i.e. `staging`)
+#     - git checkout --track origin/$CI_COMMIT_REF_NAME
 
-    # Merge branch into main & push
-    - git checkout main
-    - git reset --hard origin/main
-    - git merge --no-ff $CI_COMMIT_REF_NAME
-    - git push origin main
+#     # Merge branch into main & push
+#     - git checkout main
+#     - git reset --hard origin/main
+#     - git merge --no-ff $CI_COMMIT_REF_NAME
+#     - git push origin main
 
 docs:upload:
   extends: .run-only-on-staging
