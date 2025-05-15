@@ -1,7 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": [".env"],
-  "globalDotEnv": ["packages/service/.env", "packages/service/.env.local"],
+  "globalDotEnv": [".env", ".env.local"],
   "globalEnv": ["NODE_ENV", "VERCEL_ENV", "VERCEL_URL", "PORT"],
   "pipeline": {
     "validate": {
@@ -16,10 +16,7 @@
       "env": [
         "NEXT_PUBLIC_VERCEL_ENV",
         "NEXT_PUBLIC_SENTRY_DSN",
-        "NEXT_PUBLIC_COMMIT_SHA",
-        "NEXT_PUBLIC_DATADOG_APP_ID",
-        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
-        "NEXT_PUBLIC_ZAPIER_ORIGIN"
+        "NEXT_PUBLIC_COMMIT_SHA"
       ]
     },
     "typecheck": {
@@ -41,9 +38,6 @@
         "NEXT_PUBLIC_VERCEL_ENV",
         "NEXT_PUBLIC_SENTRY_DSN",
         "NEXT_PUBLIC_COMMIT_SHA",
-        "NEXT_PUBLIC_DATADOG_APP_ID",
-        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
-        "NEXT_PUBLIC_ZAPIER_ORIGIN",
         "PORT"
       ]
     },
@@ -51,10 +45,7 @@
       "env": [
         "NEXT_PUBLIC_VERCEL_ENV",
         "NEXT_PUBLIC_SENTRY_DSN",
-        "NEXT_PUBLIC_COMMIT_SHA",
-        "NEXT_PUBLIC_DATADOG_APP_ID",
-        "NEXT_PUBLIC_DATADOG_CLIENT_TOKEN",
-        "NEXT_PUBLIC_ZAPIER_ORIGIN"
+        "NEXT_PUBLIC_COMMIT_SHA"
       ]
     },
     "dev": {
@@ -63,3 +54,4 @@
     }
   }
 }
+
