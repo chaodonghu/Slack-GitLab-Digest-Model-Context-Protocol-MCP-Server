@@ -61,3 +61,5 @@ cypress/results
 .vscode
 .turbo
 .vercel
+
+src/env
