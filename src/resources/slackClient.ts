@@ -1,4 +1,4 @@
-import { ChannelInfo } from "../types";
+import { ChannelInfo } from "../types/slack.js";
 
 class SlackClient {
   private botHeaders: { Authorization: string; "Content-Type": string };
