@@ -14,36 +14,6 @@
 - OpenAI API key
 - Gitlab Token
 
-### Installation
-
-1. Install dependencies:
-
-```bash
-pnpm install
-```
-
-2. Create a `.env` file based on the following template:
-
-```
-# Server Configuration
-PORT=3000
-
-# Slack API Configuration
-SLACK_API_TOKEN=xoxb-your-bot-token-here
-
-# OpenAI API Configuration
-OPENAI_API_KEY=your-openai-api-key-here
-
-# Gitlab API Configuration
-GITLAB_TOKEN=gitlab-token-here
-```
-
-3. Start the server:
-
-```bash
-pnpm start
-```
-
 ## 🚀 Getting Started
 
 ### 1. Environment Setup
@@ -52,6 +22,9 @@ First, you'll need to set up your environment variables. Create a file at `src/e
 
 ```typescript
 export const OPENAI_API_KEY = "your_key_here";
+export const SLACK_API_TOKEN = "your_key_here";
+export const GITLAB_TOKEN = "your_key_here";
+
 // Add any other keys you need
 ```
 
@@ -65,11 +38,26 @@ npm install
 yarn install
 ```
 
-## 3. Test with MCP inspector when developing
+## 3. Test with MCP inspector when developing -> currently you'll have to switch to the `dev` branch, i'm unable to get a build branch working locally
 
+Create a `.env` file with
+
+```bash
+# Slack API Configuration
+SLACK_API_TOKEN=key_here
+
+# OpenAI API Configuration
+OPENAI_API_KEY=key_here
+
+# Gitlab API Configuration
+GITLAB_TOKEN=key_here
+
+```
 - https://github.com/modelcontextprotocol/inspector
 
 ```bash
+git checkout dev
+pnpm install
 npx @modelcontextprotocol/inspector start
 ```
 
