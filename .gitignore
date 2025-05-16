@@ -63,3 +63,4 @@ cypress/results
 .vercel
 
 src/env
+src/env/keys.ts
