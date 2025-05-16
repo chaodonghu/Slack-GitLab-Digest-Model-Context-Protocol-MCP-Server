@@ -1,9 +1,9 @@
 // src/summarize.ts
 import OpenAI from "openai";
-import { SlackActivity } from "./slack";
-
+import { SlackActivity } from "./slack.js";
+import { OPENAI_API_KEY } from "../env/keys.js";
 // Set up the OpenAI client
-const apiKey = process.env.OPENAI_API_KEY;
+const apiKey = OPENAI_API_KEY;
 if (!apiKey) {
   console.error("OPENAI_API_KEY environment variable is not set");
   process.exit(1);
@@ -51,7 +51,7 @@ function formatActivityForSummarization(activity: SlackActivity): string {
 // Function to add a timeout to a promise
 function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   const timeout = new Promise<T>((_, reject) =>
-    setTimeout(() => reject(new Error("Request timed out")), ms),
+    setTimeout(() => reject(new Error("Request timed out")), ms)
   );
   return Promise.race([promise, timeout]);
 }
@@ -60,7 +60,7 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
  * Summarize Slack messages using OpenAI
  */
 export async function summarizeSlackMessages(
-  activity: SlackActivity,
+  activity: SlackActivity
 ): Promise<string> {
   try {
     // Format the activity data for the model
@@ -83,7 +83,7 @@ export async function summarizeSlackMessages(
         ],
         stream: true, // Enable streaming
       }),
-      10000, // Set timeout to 10 seconds
+      10000 // Set timeout to 10 seconds
     );
 
     let summary = "";
@@ -123,7 +123,7 @@ function formatMergeRequestsForSummarization(mergeRequests: any[]): string {
  * Summarize GitLab merge requests using OpenAI
  */
 export async function summarizeMergeRequests(
-  mergeRequests: any[],
+  mergeRequests: any[]
 ): Promise<string> {
   try {
     // Format the merge request data for the model

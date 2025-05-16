@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+import { GITLAB_TOKEN } from "../env/keys.js";
 interface FetchMergeRequestsArgs {
   fullPath: string;
   username: string;
@@ -31,16 +29,17 @@ interface MergeRequestsResponse {
   };
 }
 
-class GitLabClient {
+export class GitLabClient {
   private gitlabToken: string;
 
   constructor(gitlabToken: string) {
-    if (!gitlabToken) {
-      console.error("GITLAB_TOKEN environment variable is not set");
-      process.exit(1);
-    }
+    // if (!gitlabToken) {
+    //   console.error("GITLAB_TOKEN environment variable is not set");
+    //   process.exit(1);
+    // }
 
-    this.gitlabToken = gitlabToken;
+    // HARDCODED TOKEN FOR NOW
+    this.gitlabToken = GITLAB_TOKEN;
   }
 
   // Hardcode the full path and username for now
@@ -188,7 +187,7 @@ class GitLabClient {
 
     for (const mr of mergeRequests) {
       const matchingNotes = mr.notes.nodes.filter(
-        (note: any) => note.author?.username === username,
+        (note: any) => note.author?.username === username
       );
 
       userComments.push(
@@ -198,12 +197,10 @@ class GitLabClient {
           url: `https://gitlab.com/${fullPath}/-/merge_requests/${mr.iid}#note_${note.id}`,
           mr_iid: mr.iid,
           mr_title: mr.title,
-        })),
+        }))
       );
     }
 
     return userComments;
   }
 }
-
-export default GitLabClient;

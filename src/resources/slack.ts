@@ -1,10 +1,8 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import { WebClient } from "@slack/web-api";
+import { SLACK_API_TOKEN } from "../env/keys.js";
 
 // Initialize Slack client with token from environment variable
-const slackToken = process.env.SLACK_API_TOKEN;
+const slackToken = SLACK_API_TOKEN;
 if (!slackToken) {
   console.error("SLACK_API_TOKEN environment variable is not set");
   process.exit(1);
@@ -118,8 +116,8 @@ export async function getUserActivity(
       // Get all threads where user participated
       const channelId = channel.id; // Store channel.id in a variable
       const threadsPromises = messagesResponse.messages
-        .filter((msg) => msg.thread_ts && msg.user === userSlackId)
-        .map(async (msg) => {
+        .filter((msg: any) => msg.thread_ts && msg.user === userSlackId)
+        .map(async (msg: any) => {
           if (!msg.thread_ts) return [];
 
           const repliesResponse = await slack.conversations.replies({
@@ -132,7 +130,7 @@ export async function getUserActivity(
           if (!repliesResponse.messages) return [];
 
           return repliesResponse.messages.filter(
-            (reply) => reply.user === userSlackId,
+            (reply: any) => reply.user === userSlackId,
           ) as SlackMessage[];
         });
 
