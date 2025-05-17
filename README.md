@@ -1,3 +1,5 @@
+A Model-Context-Protocol (MCP) server that retrieves Slack activity (messages, threads, replies), GitLab merge requests, and related comments, with summaries generated via OpenAI. Designed to help developers generate daily standups, weekly reports, or quarterly check-ins effortlessly.
+
 ## Features
 
 - **Summarizes Slack activity** for a user in different timeframes (today, yesterday, day before yesterday, last week)
